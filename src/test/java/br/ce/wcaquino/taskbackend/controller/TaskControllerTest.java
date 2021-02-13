@@ -43,6 +43,19 @@ public class TaskControllerTest {
     }
 
     @Test
+    public void naoDeveSalvarTarefaComDescricaoVazia(){
+        Task task = new Task();
+        task.setDueDate(LocalDate.now());
+        task.setTask("");
+        try {
+            controller.save(task);
+            Assert.fail("Não deveria ter chegado nesse ponto");
+        } catch (ValidationException e) {
+            Assert.assertEquals("Fill the task description", e.getMessage());
+        }
+    }
+
+    @Test
     public void naoDeveSalvarTarefaSemData(){
         Task task = new Task();
         task.setTask("task");
