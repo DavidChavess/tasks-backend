@@ -1,8 +1,8 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('teste'){
-            step{
+    stages {
+        stage ('teste') {
+            step {
                 sh 'echo teste'
             } 
         }
