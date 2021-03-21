@@ -42,13 +42,19 @@ pipeline {
                 }
             }
         }
-         stage ('Deploy Front') {
+        stage ('Deploy Front') {
             steps {
                 dir ('frontend'){
                     git branch: 'master', credentialsId: 'gitHub', url: 'https://github.com/DavidChavess/tasks-frontend'
                     sh 'mvn clean package'
                     deploy adapters: [tomcat8(credentialsId: 'tomcat', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
                 }
+            }
+        }
+        stage ('Deploy prod'){
+            steps { 
+                sh 'sudo docker-compose build'
+                sh 'sudo docker-compose up'
             }
         }
     }
