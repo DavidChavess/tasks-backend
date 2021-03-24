@@ -1,0 +1,28 @@
+[1mdiff --git a/jenkinsfile b/jenkinsfile[m
+[1mindex 5fda721..166e9df 100644[m
+[1m--- a/jenkinsfile[m
+[1m+++ b/jenkinsfile[m
+[36m@@ -62,5 +62,11 @@[m [mpipeline {[m
+         always {[m
+             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml, api-test/target/surefire-reports/*.xml'[m
+         }[m
+[32m+[m[32m        unsuccessful {[m
+[32m+[m[32m            emailext attachLog: true, body: 'See the attached log below', subject: 'Build $BUILD_NUMBER has failed', to: 'davi.ch.fe+jenkins@gmail.com'[m
+[32m+[m[32m        }[m
+[32m+[m[32m        fixed {[m
+[32m+[m[32m            emailext attachLog: true, body: 'See the attached log below', subject: 'Build $BUILD_NUMBER has finished', to: 'davi.ch.fe+jenkins@gmail.com'[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+[1mdiff --git a/src/test/java/br/ce/wcaquino/taskbackend/controller/TaskControllerTest.java b/src/test/java/br/ce/wcaquino/taskbackend/controller/TaskControllerTest.java[m
+[1mindex 4ec9478..ac03cb1 100644[m
+[1m--- a/src/test/java/br/ce/wcaquino/taskbackend/controller/TaskControllerTest.java[m
+[1m+++ b/src/test/java/br/ce/wcaquino/taskbackend/controller/TaskControllerTest.java[m
+[36m@@ -33,6 +33,7 @@[m [mpublic class TaskControllerTest {[m
+     @Test[m
+     public void naoDeveSalvarTarefaSemDescricao(){[m
+         Task task = new Task();[m
+[32m+[m[32m        task.setTask("task");[m
+         task.setDueDate(LocalDate.now());[m
+         try {[m
+             controller.save(task);[m
