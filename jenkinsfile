@@ -51,6 +51,14 @@ pipeline {
                 }
             }
         }
+        stage ('functionals test') {
+            steps {
+                dir ('functional-test') {
+                    git branch: 'main', credentialsId: 'gitHub', url: 'https://github.com/DavidChavess/tasks-test-functional.git'
+                    sh 'mvn test'
+                }
+            }
+        }
         stage ('Deploy prod'){
             steps { 
                 sh 'sudo docker-compose build'
